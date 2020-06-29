@@ -47,8 +47,8 @@ type KleinboyFrontMatter = {
 
 type ArticleMetadata = {
   path: string;
-  sourceType?: string;
-  sourcePath?: string;
+  source_type?: string;
+  source_path?: string;
   title: string;
   description?: string;
   tags?: string[];
@@ -215,8 +215,8 @@ async function collectArticle(
   const status = frontmatter["x-kleinboy"]?.status;
   const articleMetadata = {
     path: articlePath,
-    sourceType: "markdown",
-    sourcePath: markdownPath,
+    source_type: "markdown",
+    source_path: markdownPath,
     title,
     description,
     tags: frontmatter.tags,
