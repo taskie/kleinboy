@@ -1,10 +1,13 @@
 import { execute } from "./kleinboy";
+import * as listImages from "./list-images";
+import { Config } from "./types";
 
 type ParsedArgs = {
   dumpArticleMetadata: boolean;
   dumpArticleAST: boolean;
   dumpArticleHTML: boolean;
   dumpTagMetadata: boolean;
+  listImages: boolean;
   help: boolean;
   errors: Failure[];
 };
@@ -26,6 +29,7 @@ function parseArgs(args: string[]): ParsedArgs {
     dumpArticleAST: false,
     dumpArticleHTML: false,
     dumpTagMetadata: true,
+    listImages: false,
     help: false,
     errors: [],
   };
@@ -37,6 +41,10 @@ function parseArgs(args: string[]): ParsedArgs {
       case "--debug":
         result.dumpArticleAST = true;
         result.dumpArticleHTML = true;
+        break;
+      case "-I":
+      case "--list-images":
+        result.listImages = true;
         break;
       case "-h":
       case "--help":
@@ -64,12 +72,17 @@ function main() {
     process.exit(0);
   }
   new Promise(() => {
-    return execute({
+    const config: Config = {
       dumpArticleMetadata: opts.dumpArticleMetadata,
       dumpArticleAST: opts.dumpArticleAST,
       dumpArticleHTML: opts.dumpArticleHTML,
       dumpTagMetadata: opts.dumpTagMetadata,
-    });
+    };
+    if (opts.listImages) {
+      return listImages.execute(config);
+    } else {
+      return execute(config);
+    }
   })
     .then(() => {
       // completed

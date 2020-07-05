@@ -12,57 +12,7 @@ import remarkFrontmatter from "remark-frontmatter";
 import rehypeStringify from "rehype-stringify";
 import { Node } from "unist";
 
-type Config = {
-  untitled?: string;
-  dumpArticleMetadata?: boolean;
-  dumpArticleAST?: boolean;
-  dumpArticleHTML?: boolean;
-  dumpTagMetadata?: boolean;
-};
-
-// https://jekyllrb.com/docs/front-matter/
-
-type FrontMatter = {
-  layout?: string;
-  published?: boolean;
-  date?: string;
-  category?: string;
-  categories?: string[];
-  tags?: string[];
-
-  "x-kleinboy"?: KleinboyFrontMatter;
-  [k: string]: any;
-};
-
-type KleinboyFrontMatter = {
-  status?: string;
-  title?: string;
-  description?: string;
-  images?: [];
-  published_time?: string;
-  modified_time?: string;
-};
-
-// https://ogp.me
-
-type ArticleMetadata = {
-  path: string;
-  source_type?: string;
-  source_path?: string;
-  title: string;
-  description?: string;
-  tags?: string[];
-  images?: string[];
-  status?: string;
-  published_time?: string;
-  modified_time?: string;
-};
-
-type ArticleIndex = {
-  path: string;
-  status?: string;
-  published_time?: string;
-};
+import { Config, ArticleMetadata, ArticleIndex, FrontMatter } from "./types";
 
 function makeArticleIndex({ path, status, published_time }: ArticleMetadata): ArticleIndex {
   return { path, status, published_time };
